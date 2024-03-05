@@ -1,0 +1,34 @@
+def explorar(laberinto, fila, columna):
+    # Condiciones de borde: si estamos fuera del laberinto o si encontramos la salida
+    if fila < 0 or columna < 0 or fila >= len(laberinto) or columna >= len(laberinto[0]) or laberinto[fila][columna] == 1:
+        return False
+    elif laberinto[fila][columna] == 2:
+        return True
+    
+    # Marcamos la celda actual como visitada
+    laberinto[fila][columna] = -1
+    
+    # Exploramos en todas las direcciones posibles
+    if explorar(laberinto, fila + 1, columna) or explorar(laberinto, fila - 1, columna) or \
+       explorar(laberinto, fila, columna + 1) or explorar(laberinto, fila, columna - 1):
+        return True
+    
+    # Si no encontramos la salida, revertimos la marca para retroceder
+    laberinto[fila][columna] = 0
+    return False
+
+def encontrar_camino(laberinto):
+    # Buscamos la entrada del laberinto
+    for i in range(len(laberinto)):
+        for j in range(len(laberinto[0])):
+            if laberinto[i][j] == 0:
+                # Si encontramos la entrada, empezamos a explorar desde ahí
+                if explorar(laberinto, i, j):
+                    return True
+    return False
+
+# Ejecutamos la función para encontrar el camino
+if encontrar_camino(laberinto):
+    print("Se encontró un camino desde la entrada hasta la salida.")
+else:
+    print("No se encontró ningún camino desde la entrada hasta la salida.")
