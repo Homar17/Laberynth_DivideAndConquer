@@ -8,5 +8,5 @@
  -Angel Sebastian Garnica Carbajal (Frontend)
  	Commit 1 (29 de febrero): Creacion de repositorio y archivo Readme.
   	Commit 2 (4 de marzo): Pruebas y creacion de la GUI donde se mostrara el laberinto, se implementara una ventana sencilla de inicio.
-   	Commit 3 (7 de marzo):
-    	Commit Final (10 de marzo):
+   	Commit 3 (7 de marzo): Diseñar la parte visual del laberinto (colores: para el laberinto, el jugador, los puntos de teletransporte y la salida)
+    	Commit Final (10 de marzo): Probar el laberinto, corregir fallas técnicas o visuales.
