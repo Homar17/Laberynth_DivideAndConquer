@@ -1,34 +1,60 @@
-def explorar(laberinto, fila, columna):
-    # Condiciones de borde: si estamos fuera del laberinto o si encontramos la salida
-    if fila < 0 or columna < 0 or fila >= len(laberinto) or columna >= len(laberinto[0]) or laberinto[fila][columna] == 1:
+import random
+
+# Función para generar un laberinto aleatorio
+def generar_laberinto(n):
+    laberinto = [[0 for _ in range(n)] for _ in range(n)]
+    
+    # Establecer la entrada y la salida
+    laberinto[0][0] = 0  # Entrada
+    laberinto[n-1][n-1] = 2  # Salida
+    
+    # Generar paredes aleatorias
+    for i in range(n):
+        for j in range(n):
+            if random.random() < 0.3:  # Probabilidad de que haya una pared
+                laberinto[i][j] = 1
+    
+    return laberinto
+
+# Función para imprimir el laberinto
+def imprimir_laberinto(laberinto):
+    for row in laberinto:
+        print(" ".join(map(str, row)))
+
+# Función para resolver el laberinto utilizando divide and conquer
+def resolver_laberinto(laberinto, x, y):
+    n = len(laberinto)
+    
+    # Verificar si estamos fuera de los límites del laberinto o en una pared
+    if x < 0 or y < 0 or x >= n or y >= n or laberinto[x][y] == 1:
         return False
-    elif laberinto[fila][columna] == 2:
+    
+    # Verificar si hemos llegado a la salida
+    if laberinto[x][y] == 2:
         return True
     
-    # Marcamos la celda actual como visitada
-    laberinto[fila][columna] = -1
+    # Marcar la celda como visitada
+    laberinto[x][y] = 3
     
-    # Exploramos en todas las direcciones posibles
-    if explorar(laberinto, fila + 1, columna) or explorar(laberinto, fila - 1, columna) or \
-       explorar(laberinto, fila, columna + 1) or explorar(laberinto, fila, columna - 1):
+    # Explorar en todas las direcciones
+    if (resolver_laberinto(laberinto, x+1, y) or
+        resolver_laberinto(laberinto, x-1, y) or
+        resolver_laberinto(laberinto, x, y+1) or
+        resolver_laberinto(laberinto, x, y-1)):
         return True
     
-    # Si no encontramos la salida, revertimos la marca para retroceder
-    laberinto[fila][columna] = 0
+    # Si ninguna dirección lleva a la salida, marcar la celda como parte del camino muerto
+    laberinto[x][y] = 4
     return False
 
-def encontrar_camino(laberinto):
-    # Buscamos la entrada del laberinto
-    for i in range(len(laberinto)):
-        for j in range(len(laberinto[0])):
-            if laberinto[i][j] == 0:
-                # Si encontramos la entrada, empezamos a explorar desde ahí
-                if explorar(laberinto, i, j):
-                    return True
-    return False
+# Función para resolver y mostrar el laberinto
+def resolver_y_mostrar(laberinto):
+    if resolver_laberinto(laberinto, 0, 0):
+        print("¡Se encontró una solución!")
+        imprimir_laberinto(laberinto)
+    else:
+        print("No se encontró una solución.")
 
-# Ejecutamos la función para encontrar el camino
-if encontrar_camino(laberinto):
-    print("Se encontró un camino desde la entrada hasta la salida.")
-else:
-    print("No se encontró ningún camino desde la entrada hasta la salida.")
+# Generar un laberinto de 6x6 y resolverlo
+laberinto = generar_laberinto(6)
+resolver_y_mostrar(laberinto)
