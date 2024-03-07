@@ -14,5 +14,5 @@
 -Javier Solorzano Razo (Back-end)
  	Commit 1 (29 de febrero): Creacion de repositorio y archivo Readme.
   	Commit 2 (4 de marzo): Implementar y crear un algoritmo para poder encontrar un camino desde la entrada hasta la salida.
-   	Commit 3 (7 de marzo): Implementar el modo de avanzar y introducir la reglas especiales en el laberinto.
-    	Commit Final (10 de marzo): Probar para que tanto visualmente y a la hora de avanzar cumpla con los requisitos y las reglas que estan.
+   	Commit 3 (7 de marzo): Implementar el modo de avanzar y que llegue a la salida del laberinto.
+    	Commit Final (10 de marzo): Probar que sirvan los requisitos y las reglas que estan.
