@@ -1,0 +1,114 @@
+import random
+import tkinter as tk
+from tkinter import messagebox
+
+def crear_laberinto(filas, columnas):
+    laberinto = [[1] * columnas for _ in range(filas)]  # Inicializar con paredes
+    laberinto[0][0] = 0  # Entrada
+    # Determinar una salida en una posición aleatoria
+    salida_fila = random.randint(1, filas - 2)
+    salida_columna = random.randint(1, columnas - 2)
+    laberinto[salida_fila][salida_columna] = 2  # Salida
+    # Crear espacios abiertos aleatorios
+    for i in range(filas):
+        for j in range(columnas):
+            if (i, j) != (salida_fila, salida_columna) and random.random() < 0.6:
+                laberinto[i][j] = 0
+    # Agregar casilla morada con trivia
+    casilla_morada_fila = random.randint(0, filas - 1)
+    casilla_morada_columna = random.randint(0, columnas - 1)
+    while laberinto[casilla_morada_fila][casilla_morada_columna] != 0:  # Asegurar que la casilla sea camino
+        casilla_morada_fila = random.randint(0, filas - 1)
+        casilla_morada_columna = random.randint(0, columnas - 1)
+    laberinto[casilla_morada_fila][casilla_morada_columna] = '?'  # Casilla morada
+    return laberinto
+
+def resolver_laberinto():
+    global laberinto, filas, columnas
+
+    def resolver(fil, col):
+        nonlocal solved
+        if 0 <= fil < filas and 0 <= col < columnas and not solved:
+            if laberinto[fil][col] == 2:
+                solved = True
+                messagebox.showinfo("Laberinto", "¡Laberinto resuelto!")
+                return
+
+            if laberinto[fil][col] == '?':
+                trivia_correcta = False
+                while not trivia_correcta:
+                    trivia_resuelta = messagebox.askyesno("Trivia", "¿Cuánto es 2 + 2?")
+                    if trivia_resuelta:
+                        trivia_correcta = True
+                    else:
+                        messagebox.showinfo("Trivia", "Respuesta incorrecta. Intenta de nuevo.")
+
+                laberinto[fil][col] = 0
+                mostrar_laberinto(laberinto)
+                resolver(fil + 1, col)
+                resolver(fil, col + 1)
+                resolver(fil - 1, col)
+                resolver(fil, col - 1)
+                laberinto[fil][col] = '?'  # Deshacer el movimiento
+
+            if laberinto[fil][col] == 0:
+                laberinto[fil][col] = '.'
+                mostrar_laberinto(laberinto)
+                resolver(fil + 1, col)
+                resolver(fil, col + 1)
+                resolver(fil - 1, col)
+                resolver(fil, col - 1)
+                laberinto[fil][col] = 0  # Deshacer el movimiento
+
+    solved = False
+    resolver(0, 0)
+    if not solved:
+        messagebox.showinfo("Laberinto", "No se encontró una solución.")
+
+def generar_laberinto():
+    global laberinto, filas, columnas
+    filas = int(entry_filas.get())
+    columnas = int(entry_columnas.get())
+    if filas < 6 or columnas < 6:
+        messagebox.showerror("Error", "El tamaño mínimo del laberinto es 6x6.")
+        return
+    elif filas != columnas:
+        messagebox.showerror("Error", "El tamaño debe ser cuadrado.")
+        return
+
+    laberinto = crear_laberinto(filas, columnas)
+    mostrar_laberinto(laberinto)
+
+def mostrar_laberinto(laberinto):
+    colores = {0: "white", 1: "black", 2: "red", '?': "purple", '.': "green", 'entrada': "blue"}  # Agregar color para la entrada
+    for i, fila in enumerate(laberinto):
+        for j, valor in enumerate(fila):
+            color = colores[valor]
+            if (i, j) == (0, 0):  # Verificar si la casilla es la entrada
+                color = colores['entrada']
+            canvas.create_rectangle(j * 30, i * 30, (j + 1) * 30, (i + 1) * 30, fill=color)
+            canvas.update()
+
+root = tk.Tk()
+root.title("Generador y Resolver de Laberintos")
+
+canvas = tk.Canvas(root, width=300, height=300)
+canvas.pack()
+
+label_filas = tk.Label(root, text="Filas:")
+label_filas.pack()
+entry_filas = tk.Entry(root)
+entry_filas.pack()
+
+label_columnas = tk.Label(root, text="Columnas:")
+label_columnas.pack()
+entry_columnas = tk.Entry(root)
+entry_columnas.pack()
+
+button_generar = tk.Button(root, text="Generar Laberinto", command=generar_laberinto)
+button_generar.pack()
+
+button_resolver = tk.Button(root, text="Resolver Laberinto", command=resolver_laberinto)
+button_resolver.pack()
+
+root.mainloop()
