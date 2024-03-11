@@ -149,16 +149,23 @@ def mostrar_laberinto(laberinto):
 
 def reglas():
     root_regla = tk.Tk()
+    root_regla.configure(background="#0E2954")
     root_regla.title("Reglas")
-    root_regla.geometry("300x250")
-    label_reglas = tk.Label(root_regla, text="REGLAS: \n", font=("Berlin Sans FB Demi", 14), fg="#A4CE95")
-    label_reglas1 = tk.Label(root_regla, text="1. La casilla  la entrada\n"
-                                        "2. La casilla  es el juador"
-                                        "3. La casilla  es una trivia\n"
-                                        "4. La casilla  es la salida\n"
-                                        "5. La casilla  es un teletransporte random", font=("Berlin Sans FB Demi", 12))
+    root_regla.geometry("650x350")
+    label_reglas = tk.Label(root_regla, text="REGLAS: \n", font=("Berlin Sans FB Demi", 14),bg="#0E2954" ,fg="#A4CE95")
+    label_reglas1 = tk.Label(root_regla, text="1. La casilla azul es la posicion inicial\n", bg="#0E2954" ,fg="Blue" ,font=("Berlin Sans FB Demi", 12))
+    label_reglas2 = tk.Label(root_regla, text="2. Las casillas verdes es el camino que recorre el jugador\n",bg="#0E2954" ,fg="Green" ,font=("Berlin Sans FB Demi", 12))
+    label_reglas3 = tk.Label(root_regla, text="3. La casilla roja es un teletransporte random\n",bg="#0E2954" ,fg="Red" ,font=("Berlin Sans FB Demi", 12))
+    label_reglas4 = tk.Label(root_regla, text="4. La casilla morada es una trivia\n"
+                                              "(No se podra avanzar hasta responder bien)\n",bg="#0E2954" ,fg="Purple" ,font=("Berlin Sans FB Demi", 12))
+    label_reglas5 = tk.Label(root_regla, text="5. La casilla amarilla es la salida\n",bg="#0E2954" ,fg="Yellow" ,font=("Berlin Sans FB Demi", 12))
+
     label_reglas.pack()
     label_reglas1.pack()
+    label_reglas2.pack()
+    label_reglas3.pack()
+    label_reglas4.pack()
+    label_reglas5.pack()
     button_ocultar = tk.Button(root_regla, text="Ocultar", font=("Berlin Sans FB Demi", 9),command=root_regla.destroy, bg="#6196A6", fg="#F4EDCC")
     button_ocultar.pack()
 
