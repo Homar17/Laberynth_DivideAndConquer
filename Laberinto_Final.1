@@ -155,10 +155,11 @@ def reglas():
     label_reglas = tk.Label(root_regla, text="REGLAS: \n", font=("Berlin Sans FB Demi", 14),bg="#0E2954" ,fg="#A4CE95")
     label_reglas1 = tk.Label(root_regla, text="1. La casilla azul es la posicion inicial\n", bg="#0E2954" ,fg="Blue" ,font=("Berlin Sans FB Demi", 12))
     label_reglas2 = tk.Label(root_regla, text="2. Las casillas verdes es el camino que recorre el jugador\n",bg="#0E2954" ,fg="Green" ,font=("Berlin Sans FB Demi", 12))
-    label_reglas3 = tk.Label(root_regla, text="3. La casilla roja es un teletransporte random\n",bg="#0E2954" ,fg="Red" ,font=("Berlin Sans FB Demi", 12))
+    label_reglas3 = tk.Label(root_regla, text="3. La casilla roja es la salida\n",bg="#0E2954" ,fg="Red" ,font=("Berlin Sans FB Demi", 12))
     label_reglas4 = tk.Label(root_regla, text="4. La casilla morada es una trivia\n"
                                               "(No se podra avanzar hasta responder bien)\n",bg="#0E2954" ,fg="Purple" ,font=("Berlin Sans FB Demi", 12))
-    label_reglas5 = tk.Label(root_regla, text="5. La casilla amarilla es la salida\n",bg="#0E2954" ,fg="Yellow" ,font=("Berlin Sans FB Demi", 12))
+    label_reglas5 = tk.Label(root_regla, text="5. La casilla amarilla es un teletransporte\n"
+                                              "(Te enviara a una posicion al azar del laberinto)",bg="#0E2954" ,fg="Yellow" ,font=("Berlin Sans FB Demi", 12))
 
     label_reglas.pack()
     label_reglas1.pack()
